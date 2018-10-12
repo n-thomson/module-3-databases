@@ -1,0 +1,70 @@
+1. What data types do each of these values represent?
+"A Clockwork Orange" - string
+42 -  integer
+09/02/1945  - date
+98.7 - float
+$15.99 - float
+
+2. Explain when a database would be used. Explain when a text file would be used.
+Databases allow data to persist beyond the end of an application process. It also allows multiple applications to use the same data
+and update it in real-time.
+
+A text file is used when you don't want to retain the changes made during the program run i.e., whenever the program is run,
+only the initial data saved on the file is available; any additions, deletions, changes from previous run are not recorded.
+It also doesn't support multiple users to simultaneously work on the same file.
+
+3. Describe one difference between SQL and other programming languages.
+SQL is a declarative programming language meaning you only need to tell it what you are looking for (the result/goal),
+there is no need to provide step-by-step algorithm on how to find it. SQL behind the scenes will take care of that.
+
+4. In your own words, explain how the pieces of a database system fit together at a high level.
+Applications use databases to create/retrieve/update/delete application data. In real-life applications, there are multiple simultaneous
+users that use the same data(subject to authorization and authentication) and for an application to make sense, it is important that the
+data persists well beyond these individual sessions and to allow simultaneous edits to data.
+
+5. Explain the meaning of table, row, column, and value.
+Table - collection of records - e.g., a table holding customer data of multiple customers
+row -  an individual record - e.g., information related to one particular customer
+column - information related to one attribute - e.g., email in a customer table holds customer email information
+value - individual information - e.g., sam@abc.com is a value for email attribute
+
+6. List three data types that can be used in a table.
+char, varchar, date, number
+
+7. Given this payments table, provide an English description of the following queries and include their results:
+
+     SELECT date, amount          //selects two columns - date and amount - from the payments table
+     FROM payments;
+
+     SELECT amount                //retrieves all amounts greater than 500 from the payments table
+     FROM payments
+     WHERE amount > 500;
+
+     SELECT *                     //retrieves all records from payments table where payee is Mega Foods
+     FROM payments
+     WHERE payee = 'Mega Foods';
+
+
+8. Given this users table, write SQL queries using the following criteria and include the output:
+
+a. The email and sign-up date for the user named DeAndre Data.
+
+SELECT email, signup FROM users
+WHERE name = 'DeAndre Data';
+
+email: datad@comcast.net; signup: 2008-01-20T00:00:00.000Z
+https://www.db-fiddle.com/f/iQAEYktwysXqcLQHv2dwbc/3
+
+b. The user ID for the user with email 'aleesia.algorithm@uw.edu'.
+SELECT userid FROM users
+WHERE email = 'aleesia.algorithm@uw.edu';
+
+userid: 1
+https://www.db-fiddle.com/f/iQAEYktwysXqcLQHv2dwbc/4
+
+c. All the columns for the user ID equal to 4.
+SELECT * FROM users
+WHERE userid = 4;
+
+userid: 4; name: Brandy Boolean; email: bboolean@nasa.gov; signup: 1999-10-15T00:00:00.000Z
+https://www.db-fiddle.com/f/iQAEYktwysXqcLQHv2dwbc/5

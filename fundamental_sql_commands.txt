@@ -1,0 +1,153 @@
+1. List the commands for adding, updating, and deleting data.
+INSERT INTO employee(first, last, age, city, state)
+VALUES ('Luke', 'Duke', 45, 'Atlanta', 'Georgia');
+
+UPDATE employee SET age = 46
+WHERE last = 'Duke';
+
+DELETE FROM employee
+WHERE first = 'Luke';
+
+
+2. Explain the structure for each type of command.
+INSERT INTO:
+Insert into the table 'employee' values for columns 'first', 'last', 'age', 'city', and 'state'. The values should rightly match the
+column names otherwise this might lead to bad data, as SQL generates an error only if the datatypes don't match.
+
+UPDATE:
+Update age to 46 in the employee table, where last name of the record/tuple matches 'Duke'.
+
+DELETE:
+Delete the records from the employee table that match the first name criteria of 'Luke'.
+
+3. What are some of the data types that can be used in tables? Give a real-world example of each type.
+char(size) - Holds a fixed length string, with fixed size identified in the parenthesis, e.g., to indicate the state VA, NY, etc.
+varchar(size) - Holds a variable length string, with maximum size identified in the parenthesis. e.g., name, address
+date - holds date in the format YYYY-MM-DD. e.g., 1998-10-23
+time - holds time in the format HH:MM:SS. e.g., 10:59:30.9999
+datetime() - holds a combination of date and time. Format: YYYY-MM-DD HH:MI:SS. e.g., 1998-10-23 1:45:37.123
+timestamp() - holds timestamp value, which records the number of seconds since the unix epoch. Format: YYYY-MM-DD HH:MI:SS.
+e.g., to record the time a data entry was created.
+boolean - for integers that can be 0 or 1.
+int or integer - stores integers. e.g., IDs in a table
+smallint - stores integers, with smaller range
+numeric(p,s) - where p (precision) denotes total number of digits to the left and right of decimal point together,
+where as s(scale) denotes the number of digits to the right of the decimal point, e.g., account balance
+
+4. Decide how to create a new table to hold a list of people invited to a wedding dinner. The table needs to have first and last names,
+whether they sent in their RSVP, the number of guests they are bringing, and the number of meals (1 for adults and 1/2 for children).
+
+a. Which data type would you use to store each of the following pieces of information?
+    First and last name - varchar(15)
+    Whether they sent in their RSVP - boolean
+    Number of guests - integer
+    Number of meals - numeric(5, 2)
+b. Write a command that creates the table to track the wedding dinner.
+CREATE TABLE wedding(
+    first_name varchar(15),
+    last_name varchar(15),
+    guest_number integer,
+    meal_count numeric(4, 1)
+);
+
+c. Write a command that adds a column to track whether the guest sent a thank you card.
+ALTER TABLE wedding ADD COLUMN card_count integer SET DEFAULT 0;
+
+d. You have decided to move the data about the meals to another table, so write a command to remove the column storing the number meals
+from the wedding table.
+ALTER TABLE wedding DROP COLUMN meal_count;
+
+e. The guests will need a place to sit at the reception, so write a command that adds a column for table number.
+ALTER TABLE wedding ADD COLUMN table_number integer;
+
+f. The wedding is over and we do not need to keep this information, so write a command that deletes the table numbers from the database.
+ALTER TABLE wedding DROP COLUMN table_number;
+
+5. Write a command to create a new table to hold the books in a library with the columns ISBN, title, author, genre, publishing date,
+number of copies, and available copies.
+CREATE TABLE library(
+  ISBN bigint,
+  title varchar(40),
+  author varchar(40),
+  genre varchar(15),
+  publishing_date date,
+  copies integer,
+  available_copies integer
+);
+
+a. Find three books and add their information to the table.
+INSERT INTO library(ISBN, title, author, genre, publishing_date, copies, available_copies)
+VALUES (9780385376716, 'The Wonderful Things You Will Be', 'Emily Winfield Martin', 'childrens book', '2015-08-25', 10, 3),
+(9781582701707, 'The Secret', 'Rhonda Byrne', 'Self-help', '2006-11-26', 12, 2),
+(9781426307935, 'NG Little Kids First Big Book of Why', 'Amy Shields', 'childrens book', '2011-05-10', 5, 1);
+
+b. Someone has just checked out one of the books. Change the number of available copies to 1 fewer.
+UPDATE library
+SET available_copies = available_copies-1
+WHERE ISBN = 9781582701707;
+
+c. Now one of the books has been added to the banned books list. Remove it from the table.
+DELETE FROM library
+WHERE ISBN = 9781426307935;
+
+6. Write a command to make a new table to hold spacecrafts. Information should include id, name, year launched, country of origin,
+a brief description of the mission, orbiting body, if it is currently operating, and its approximate miles from Earth. In addition to
+the table creation, provide commands that perform the following operations:
+
+CREATE TABLE spacecraft(
+  id integer,
+  name varchar(25),
+  launch_year integer,
+  origin_country varchar(50),
+  description varchar(150),
+  oribiting_body varchar(20),
+  operating_status boolean,
+  miles_from_earth bigint
+);
+
+a. Add three non-Earth-orbiting satellites to the table.
+INSERT INTO spacecraft(id, name, launch_year, origin_country, description, oribiting_body, operating_status, miles_from_earth)
+VALUES
+(1234, 'Voyager 2', 1977, 'United States of America', 'Study outer planets', 'none', true, 8.70E+09),
+(2245, 'Mangalyaan', 2013, 'India', 'Study outer planets', 'none', true, 9.50E+09),
+(3451, 'Helios', 1976, 'West Germany and United States of America', 'To study solar processes', 'dummy', true, 2.70E+07);
+
+b. Remove one of the satellites from the table since it has just crashed into the planet.
+DELETE FROM spacecraft
+WHERE id = 3451;
+
+c. Edit another satellite because it is no longer operating and change the value to reflect that.
+UPDATE spacecraft
+SET operating_status = false
+WHERE id = 1234;
+
+7. Write a command to create a new table to hold the emails in your inbox. This table should include an id, the subject line,
+the sender, any additional recipients, the body of the email, the timestamp, whether or not you have read the email, and the id of
+the email chain it's in. Also provide commands that perform the following operations:
+
+CREATE TABLE inbox(
+  id bigint,
+  subject varchar(60),
+  sender varchar(40),
+  additional_recipients varchar(200),
+  body varchar(500),
+  time timestamp,
+  read_status boolean,
+  email_chain_id integer
+);
+
+a. Add three new emails to the inbox.
+INSERT INTO inbox(id, subject, sender, additional_recipients, body, time, read_status, email_chain_id)
+VALUES(12, 'Hello there!', 'aggie@gmail.com', 'sandra@gmail.com, ted@gmail.com', 'how are you doing?', now(), true, 1),
+(23, 'Good evening', 'ss@gmail.com', 'george@gmail.com', 'dummy', now(), false, 11),
+(7, 'Hello World!', 'john@gmail.com', 'peter@gmail.com', 'how are you all?', now(), true, 4);
+
+b. You deleted one of the emails, so write a command to remove the row from the inbox table.
+DELETE FROM inbox
+WHERE id=7;
+
+c. You started reading an email but just heard a crash in another room. Mark the email as unread before investigating the crash,
+so you can come back and read it later.
+UPDATE inbox
+SET read_status = false
+WHERE id = 12;

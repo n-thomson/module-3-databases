@@ -1,0 +1,108 @@
+1. Write out a generic SELECT statement.
+SELECT * FROM table_name;
+
+2. Create a fun way to remember the order of operations in a SELECT statement, such as a mnemonic.
+Sweaty Feet Will Give Horrible Odors -- SELECT, FROM, WHERE, GROUP BY, HAVING, ORDER BY
+Sharks Fight Jellyfish With Guns! Hide On Land! -- SELECT, FROM, JOIN, WHERE, GROUP BY, HAVING, ORDER BY, LIMIT
+
+3. Given this dogs table, write queries to select the following pieces of data:
+Intake teams typically guess the breed of shelter dogs, so the breed column may have multiple words (for example, "Labrador Collie mix").
+
+a. Display the name, gender, and age of all dogs that are part Labrador.
+SELECT name, gender, age FROM dogs
+WHERE breed LIKE '%labrador%';
+
+b. Display the ids of all dogs that are under 1 year old.
+SELECT id FROM dogs
+WHERE age<1;
+
+c. Display the name and age of all dogs that are female and over 35lbs.
+SELECT name, age FROM dogs
+WHERE gender = 'F' AND weight >35;
+
+d. Display all of the information about all dogs that are not Shepherd mixes.
+SELECT * FROM dogs
+WHERE breed NOT LIKE '%shepherd%';
+
+e. Display the id, age, weight, and breed of all dogs that are either over 60lbs or Great Danes.
+SELECT id, age, weight, breed FROM dogs
+WHERE weight > 60 OR breed = 'great dane';
+
+4. Given this cats table, what records are returned from these queries?
+
+a. SELECT name, adoption_date FROM cats;
+name      | adoption_date
+----------+---------------
+Mushi     | 2016-03-22
+Seashell  |
+Azul      | 2016-04-17
+Victoire  | 2016-09-01
+Nala      |
+
+b. SELECT name, age FROM cats;
+name      | age
+----------+-----
+Mushi     |   1
+Seashell  |   7
+Azul      |   3
+Victoire  |   7
+Nala      |   1
+
+5. From the cats table, write queries to select the following pieces of data.
+a. Display all the information about all of the available cats.
+SELECT * FROM cats;
+
+b. Display the name and sex of all cats who are 7 years old.
+SELECT name, gender FROM cats
+WHERE age = 7;
+
+c. Find all of the names of the cats, so you don’t choose duplicate names for new cats.
+SELECT name FROM cats
+ORDER BY name;
+
+6. List each comparison operator and explain when you would use it. Include a real world example for each.
+If you can’t list these from memory, do these flashcards until you can!
+OPERATOR      USE                                                                     EXAMPLE
+=             Selects tuples where the values of two operands are equal           SELECT * FROM customers WHERE name = 'Peter';
+!=            Selects tuples where the values of two operands are not equal       SELECT * FROM customers WHERE name != 'Peter';
+<>            Selects tuples where the values of two operands are not equal       SELECT * FROM customers WHERE name <> 'Peter';
+>             Selects tuples where the value of left operand is greater than      SELECT * FROM customers WHERE age > 10;
+              the value of right operand
+<             Selects tuples where the value of left operand is less than         SELECT * FROM customers WHERE age < 10;
+              the value of right operand
+>=            Selects tuples where the value of left operand is greater than      SELECT * FROM customers WHERE age >= 10;
+              or equal to the value of right operand
+<=            Selects tuples where the value of left operand is less than or      SELECT * FROM customers WHERE age <= 10;
+              equal to the value of right operand
+IN            Selects tuples where the expression matches any value in a list     SELECT * FROM customers WHERE age IN (10,12,14);
+              of values
+BETWEEN       Selects tuples where the values are within a given range            SELECT * FROM customers WHERE age BETWEEN 10 AND 20;
+LIKE          Selects tuples that match the specified pattern                     SELECT * FROM customers WHERE name LIKE '%oh%';
+AND           Selects tuples that meet both criteria                              SELECT * FROM customers WHERE age = 10 AND gender = 'F';
+OR            Selects tuples that one or more of the criteria                     SELECT * FROM customers WHERE age = 10 OR gender = 'F';
+NOT           Selects tuples for which the expression returns false               SELECT * FROM customers WHERE age NOT IN (10,12,14);
+IS NULL       Selects tuples that has null value for a specified column           SELECT * FROM customers WHERE address IS NULL;
+IS NOT NULL   Selects tuples that doesn't have null value for a specified column  SELECT * FROM customers WHERE address IS NOT NULL;
+EXISTS        If the subquery returns at least one record, then EXISTS clause     SELECT * FROM customers WHERE EXISTS
+              will evaluate to true and the EXISTS condition will be met          (SELECT * FROM orders WHERE customers.cust_id = orders.cust_id);
+
+7. From the cats table, what data is returned from these queries?
+a. SELECT name FROM cats WHERE gender = 'F';
+name
+----------
+Seashell
+Nala
+
+b. SELECT name FROM cats WHERE age <> 3;
+name
+----------
+Mushi
+Seashell
+Victoire
+Nala
+
+c. SELECT ID FROM cats WHERE name != ‘Mushi’ AND gender = 'M';
+id
+----
+ 3
+ 4
